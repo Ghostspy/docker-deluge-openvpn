@@ -36,6 +36,8 @@ RUN set -ex; \
         unzip && \
     apt-get upgrade -y && \
     echo "Cleanup"; \
+    && apt-get clean \
+    && apt --purge autoremove -y \    
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
     echo "Adding user"; \
     groupmod -g 1000 users && \
