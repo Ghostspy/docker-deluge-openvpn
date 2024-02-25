@@ -20,17 +20,9 @@ RUN set -ex; \
         dos2unix \
         iputils-ping \
         jq \
-        kmod \
-        libqt5network5 \
-        libqt5xml5 \
-        libqt5sql5 \
-        libssl3 \
-        moreutils \        
         net-tools \
         openvpn \
         p7zip-full \
-        procps \
-        wireguard-tools \
         ufw \
         unrar \
         unzip && \
