@@ -1,0 +1,93 @@
+version: "3.6"
+services:
+  deluge:
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+    cap_add:
+      - "NET_ADMIN"
+    sysctls:
+        - net.ipv6.conf.all.disable_ipv6=1      
+    command:
+      - "dumb-init"
+      - "/etc/openvpn/init.sh"
+    container_name: "deluge"
+    environment:
+      - "PUID=99"
+      - "PGID=100"
+      - "UMASK_SET=022"
+      - "TZ=America/Chicago"
+      - "OPENVPN_PROVIDER=NORDVPN"
+      - "OPENVPN_USERNAME=tRsKGWLrMLCPBrQyXutXb4kW"
+      - "OPENVPN_PASSWORD=uEfEDKCVxx4SuEmZCTbpct1D"
+      - "LOCAL_NETWORK=192.168.1.0/24,192.168.10.0/24,192.168.20.0/24,172.18.0.0/16"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "HOME=/root"
+      - "LANGUAGE=en_US.UTF-8"
+      - "LANG=en_US.UTF-8"
+      - "TERM=xterm"
+      - "PYTHON_EGG_CACHE=/config/plugins/.python-eggs"
+      - "ENABLE_UFW=false"
+      - "UFW_ALLOW_GW_NET=false"
+      - "UFW_EXTRA_PORTS="
+      - "UFW_DISABLE_IPTABLES_REJECT=false"
+      - "DROP_DEFAULT_ROUTE="
+      - "GLOBAL_APPLY_PERMISSIONS=true"
+      - "DELUGE_WEB_PORT=8112"
+      - "DELUGE_DEAMON_PORT=58846"
+      - "DELUGE_DOWNLOAD_DIR=/downloads/completed"
+      - "DELUGE_INCOMPLETE_DIR=/downloads/incomplete"
+      - "DELUGE_TORRENT_DIR=/downloads/torrents"
+      - "DELUGE_WATCH_DIR=/download/watch"
+      - "CREATE_TUN_DEVICE=true"
+      - "UMASK=022"
+      - "PEER_DNS=true"
+      - "PEER_DNS_PIN_ROUTES=true"
+      - "HEALTH_CHECK_HOST=google.com"
+      - "LOG_TO_STDOUT=false"
+      - "DELUGE_LISTEN_PORT_LOW=53394"
+      - "DELUGE_LISTEN_PORT_HIGH=53404"
+      - "DELUGE_OUTGOING_PORT_LOW=63394"
+      - "DELUGE_OUTGOING_PORT_HIGH=63404"
+      - "NORDVPN_PROTOCOL=udp"
+      - "NORDVPN_COUNTRY=United States"
+    hostname: "deluge"
+    image: "harbor.ghosthacker.com/library/deluge-openvpn:latest"
+    ipc: "private"
+    labels:
+      maintainer: "Ghost Hacker"
+    logging:
+      driver: "json-file"
+      options: {}
+    networks:
+      - "torrent"
+    ports:
+      - "8112:8112/tcp"
+    restart: "unless-stopped"
+    # volumes:
+    #   - "/Config/deluge:/config"
+    #   - "/srv/zfs-archives/torrents:/downloads"
+networks:
+  torrent:
+    external: true
+    name: "torrent"

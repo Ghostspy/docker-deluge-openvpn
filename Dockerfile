@@ -1,4 +1,9 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
+
+LABEL org.opencontainers.image.authors="ghost@ghosthacker.com"
+LABEL org.opencontainers.image.version="2.1.1"
+LABEL org.opencontainers.image.description="Deluge and OpenVPN"
+LABEL org.opencontainers.image.title="DelugeVPN"
 
 ARG DEBIAN_FRONTEND="noninteractive"
 
@@ -7,6 +12,7 @@ RUN set -ex; \
     apt-get -y install software-properties-common && \
     add-apt-repository -u ppa:deluge-team/stable && \
     apt-get update && apt-get -y install dumb-init iputils-ping dnsutils bash jq net-tools openvpn curl ufw deluged deluge-web p7zip-full unrar unzip && \
+    # apt-get upgrade -y && \
     echo "Cleanup"; \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
     echo "Adding user"; \
@@ -21,13 +27,13 @@ ENV OPENVPN_USERNAME=**None** \
     OPENVPN_PASSWORD=**None** \
     OPENVPN_PROVIDER=**None** \
     GLOBAL_APPLY_PERMISSIONS=true \
-    TZ=Europe/Berlin \
+    TZ=America/Chicago \
     DELUGE_WEB_PORT=8112 \
     DELUGE_DEAMON_PORT=58846 \
-    DELUGE_DOWNLOAD_DIR=/download/completed \
-    DELUGE_INCOMPLETE_DIR=/download/incomplete \
-    DELUGE_TORRENT_DIR=/download/torrents \
-    DELUGE_WATCH_DIR=/download/watch \
+    DELUGE_DOWNLOAD_DIR=/downloads/completed \
+    DELUGE_INCOMPLETE_DIR=/downloads/incomplete \
+    DELUGE_TORRENT_DIR=/downloads/torrents \
+    DELUGE_WATCH_DIR=/downloads/watch \
     CREATE_TUN_DEVICE=true \
     ENABLE_UFW=false \
     UFW_ALLOW_GW_NET=false \
