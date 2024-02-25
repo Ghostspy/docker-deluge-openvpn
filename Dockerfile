@@ -11,7 +11,29 @@ RUN set -ex; \
     apt-get update && \
     apt-get -y install software-properties-common && \
     add-apt-repository -u ppa:deluge-team/stable && \
-    apt-get update && apt-get -y install dumb-init iputils-ping dnsutils bash jq net-tools openvpn curl ufw deluged deluge-web p7zip-full unrar unzip && \
+    apt-get update && apt-get -y install dumb-init \
+        bash \
+        curl \
+        deluged \
+        deluge-web \
+        dnsutils \
+        dos2unix \
+        iputils-ping \
+        jq \
+        kmod \
+        libqt5network5 \
+        libqt5xml5 \
+        libqt5sql5 \
+        libssl3 \
+        moreutils \        
+        net-tools \
+        openvpn \
+        p7zip-full \
+        procps \
+        wireguard-tools \
+        ufw \
+        unrar \
+        unzip && \
     apt-get upgrade -y && \
     echo "Cleanup"; \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \
