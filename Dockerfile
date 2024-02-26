@@ -17,7 +17,6 @@ RUN set -ex; \
         deluged \
         deluge-web \
         dnsutils \
-        dos2unix \
         iputils-ping \
         jq \
         net-tools \
